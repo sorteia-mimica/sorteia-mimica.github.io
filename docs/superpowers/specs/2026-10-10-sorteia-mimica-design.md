@@ -63,7 +63,7 @@ O card Regras (Padrão e Personalizado) mostra a estimativa ao vivo: "N vezes ·
 
 ## Temas
 
-Nove temas, cada um com 50 itens por dificuldade (150 por tema, 1350 no total), em `data/temas.json`, nesta ordem (todos vêm marcados numa configuração nova):
+Nove temas, cada um com 67 itens por dificuldade (201 por tema, 1809 no total; eram 50 até 2026-10-24), em `data/temas.json`, nesta ordem (todos vêm marcados numa configuração nova):
 
 | Tema | Notas / exemplos |
 |---|---|
@@ -77,7 +77,7 @@ Nove temas, cada um com 50 itens por dificuldade (150 por tema, 1350 no total), 
 | Situações malucas 🤪 | Cenas de filme, engraçadas, absurdas ou radicais (não rotina, sem repetir o dia a dia). Fácil: escorregar numa casca de banana, receber um Oscar. Médio: desarmar uma bomba, pular do trem em movimento, dirigir na contramão. Difícil: pousar um avião sem piloto, viajar no tempo. Nada de tragédia real, crime de verdade ou conteúdo sexual |
 | Famosos | Fácil: Neymar, Xuxa, Silvio Santos. Médio: Anitta, Faustão, Ayrton Senna. Difícil: Einstein, Chaves, Gretchen |
 
-**Critério de dificuldade** — conta o esforço de fazer a mímica e ser adivinhado, não o quão rara é a palavra (50 itens por dificuldade em cada tema):
+**Critério de dificuldade** — conta o esforço de fazer a mímica e ser adivinhado, não o quão rara é a palavra (67 itens por dificuldade em cada tema):
 - **Fácil:** 1 gesto/movimento óbvio e icônico que quase todo mundo acerta em segundos (sinuca = taco + giz; nadar; escovar os dentes).
 - **Médio:** precisa de 2–3 gestos ou de uma pequena cena, ou o gesto se confunde com outras coisas e pede contexto.
 - **Difícil:** conceito abstrato, história com várias etapas, ou muito difícil de diferenciar de itens parecidos mesmo com cena (marcação por zona, montar móvel sem manual).

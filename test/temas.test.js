@@ -21,12 +21,14 @@ test('comidas e situações malucas: exemplos pedidos', () => {
   contem('situacoes', 'dificil', 'Pousar um avião sem piloto');
 });
 
-test('cada tema: nome, emoji e exatamente 50 itens por dificuldade sem repetição', () => {
+const POR_DIFICULDADE = 67;
+
+test('cada tema: nome, emoji e exatamente 67 itens por dificuldade sem repetição', () => {
   for (const t of temas) {
     assert.ok(t.nome.trim() && t.emoji.trim(), t.id);
     const todos = [];
     for (const d of ['facil', 'medio', 'dificil']) {
-      assert.equal(t.itens[d].length, 50, `${t.id}/${d} tem ${t.itens[d].length}`);
+      assert.equal(t.itens[d].length, POR_DIFICULDADE, `${t.id}/${d} tem ${t.itens[d].length}`);
       for (const texto of t.itens[d]) {
         assert.equal(typeof texto, 'string');
         assert.equal(texto, texto.trim());
