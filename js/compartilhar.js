@@ -37,7 +37,16 @@ export function textoDoResultado(resumo) {
 
 const LARGURA = 1080;
 const ALTURA = 1350;
-const FONTE = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+const FONTE = '"Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+const FONTE_TITULO = '"Bungee", system-ui, sans-serif'; // já carregada pela página quando o final abre
+// Paleta do jogo (css/style.css), em hex porque o canvas não lê as variáveis.
+const TINTA = '#0b0c16';
+const PAPEL = '#fefcf4';
+const CREME = '#f8f3d5';
+const AMARELO = '#f6e200';
+const UVA = '#763ae7';
+const TURQUESA = '#00bad1';
+const CORAL = '#f75c61';
 const MAX_LINHAS_PLACAR = 5;
 
 // Corta com "…" até caber na largura.
@@ -48,23 +57,28 @@ function caber(ctx, texto, largura) {
   return `${t.trimEnd()}…`;
 }
 
+// Cartão "pop": sombra dura deslocada, preenchimento e borda grossa de tinta.
 function retangulo(ctx, x, y, w, h, r, cor) {
+  ctx.beginPath();
+  ctx.roundRect(x + 8, y + 8, w, h, r);
+  ctx.fillStyle = TINTA;
+  ctx.fill();
   ctx.beginPath();
   ctx.roundRect(x, y, w, h, r);
   ctx.fillStyle = cor;
   ctx.fill();
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = TINTA;
+  ctx.stroke();
 }
 
 function desenhar(ctx, resumo) {
-  const fundo = ctx.createLinearGradient(0, 0, LARGURA, ALTURA);
-  fundo.addColorStop(0, '#6d28d9');
-  fundo.addColorStop(1, '#a21caf');
-  ctx.fillStyle = fundo;
+  ctx.fillStyle = CREME;
   ctx.fillRect(0, 0, LARGURA, ALTURA);
-  // Bolinhas de confete discretas só nas laterais (não passam por cima do texto), sempre nos mesmos lugares.
-  const cores = ['#f59e0b', '#22c55e', '#3b82f6', '#f472b6', '#fde68a'];
+  // Bolinhas de cor só nas laterais (não passam por cima do texto), sempre nos mesmos lugares.
+  const cores = [AMARELO, TURQUESA, CORAL, UVA];
   for (let i = 0; i < 26; i++) {
-    ctx.globalAlpha = 0.4;
+    ctx.globalAlpha = 0.9;
     ctx.fillStyle = cores[i % cores.length];
     ctx.beginPath();
     const x = i % 2 ? 22 + ((i * 37) % 42) : LARGURA - 22 - ((i * 29) % 42);
@@ -74,23 +88,25 @@ function desenhar(ctx, resumo) {
   ctx.globalAlpha = 1;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = TINTA;
   ctx.font = `120px ${FONTE}`;
   ctx.fillText('🎭', LARGURA / 2, 130);
-  ctx.font = `900 78px ${FONTE}`;
-  ctx.fillText('Sorteia Mímica', LARGURA / 2, 250);
-  ctx.font = `700 38px ${FONTE}`;
-  ctx.globalAlpha = 0.85;
-  ctx.fillText('PLACAR FINAL', LARGURA / 2, 315);
-  ctx.globalAlpha = 1;
+  // Título numa etiqueta amarela, como na tela inicial.
+  ctx.font = `64px ${FONTE_TITULO}`;
+  const larguraTitulo = ctx.measureText('SORTEIA MÍMICA').width + 80;
+  retangulo(ctx, (LARGURA - larguraTitulo) / 2, 206, larguraTitulo, 96, 24, AMARELO);
+  ctx.fillStyle = TINTA;
+  ctx.fillText('SORTEIA MÍMICA', LARGURA / 2, 256);
+  ctx.font = `30px ${FONTE_TITULO}`;
+  ctx.fillText('PLACAR FINAL', LARGURA / 2, 350);
 
   const { emoji, texto } = manchete(resumo);
-  ctx.font = `850 52px ${FONTE}`;
-  ctx.fillText(caber(ctx, `${emoji} ${texto}`, LARGURA - 120), LARGURA / 2, 395);
+  ctx.font = `900 48px ${FONTE}`;
+  ctx.fillText(caber(ctx, `${emoji} ${texto}`, LARGURA - 120), LARGURA / 2, 410);
 
   // Pódio + prêmios (os que couberem), centralizados na faixa entre a manchete e o rodapé.
   const margem = 80;
-  const [topo, base] = [450, ALTURA - 110];
+  const [topo, base] = [470, ALTURA - 110];
   const linhas = resumo.placar.slice(0, MAX_LINHAS_PLACAR);
   const restantes = resumo.placar.length - linhas.length;
   const alturaPodio = linhas.reduce((soma, l) => soma + (l.posicao === 1 ? 118 : 98), 0) + (restantes > 0 ? 40 : 0);
@@ -99,10 +115,10 @@ function desenhar(ctx, resumo) {
   let y = topo + Math.max(0, (base - topo - alturaTotal) / 2);
   for (const l of linhas) {
     const alto = l.posicao === 1 ? 104 : 84;
-    retangulo(ctx, margem, y, LARGURA - margem * 2, alto, 28, l.posicao === 1 ? '#fde68a' : 'rgba(255,255,255,0.92)');
-    ctx.fillStyle = '#1d1530';
+    retangulo(ctx, margem, y, LARGURA - margem * 2, alto, 28, l.posicao === 1 ? AMARELO : PAPEL);
+    ctx.fillStyle = TINTA;
     ctx.textAlign = 'left';
-    ctx.font = `${l.posicao === 1 ? 850 : 750} ${l.posicao === 1 ? 46 : 38}px ${FONTE}`;
+    ctx.font = `${l.posicao === 1 ? 900 : 800} ${l.posicao === 1 ? 46 : 38}px ${FONTE}`;
     const pontos = pts(l.pontos);
     const larguraPontos = ctx.measureText(pontos).width;
     ctx.fillText(caber(ctx, `${medalha(l.posicao)} ${l.nome}`, LARGURA - margem * 2 - larguraPontos - 90), margem + 32, y + alto / 2);
@@ -111,45 +127,39 @@ function desenhar(ctx, resumo) {
     y += alto + 14;
   }
   ctx.textAlign = 'center';
-  ctx.fillStyle = '#ffffff';
+  ctx.fillStyle = TINTA;
   if (restantes > 0) {
-    ctx.font = `700 30px ${FONTE}`;
+    ctx.font = `800 30px ${FONTE}`;
     ctx.fillText(`+ ${restantes} na sequência`, LARGURA / 2, y + 12);
     y += 40;
   }
 
   if (premios.length > 0) {
     y += 30;
-    ctx.font = `800 34px ${FONTE}`;
-    ctx.globalAlpha = 0.85;
+    ctx.font = `26px ${FONTE_TITULO}`;
     ctx.fillText('🏅 PRÊMIOS DA NOITE', LARGURA / 2, y);
-    ctx.globalAlpha = 1;
     y += 40;
     for (const p of premios) {
-      retangulo(ctx, margem, y, LARGURA - margem * 2, 88, 24, 'rgba(255,255,255,0.16)');
+      retangulo(ctx, margem, y, LARGURA - margem * 2, 88, 24, PAPEL);
       ctx.textAlign = 'left';
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = TINTA;
       ctx.font = `48px ${FONTE}`;
       ctx.fillText(p.emoji, margem + 24, y + 44);
-      ctx.font = `700 28px ${FONTE}`;
-      ctx.globalAlpha = 0.8;
-      ctx.fillText(p.titulo.toUpperCase(), margem + 100, y + 28);
-      ctx.globalAlpha = 1;
-      ctx.font = `850 36px ${FONTE}`;
+      ctx.font = `20px ${FONTE_TITULO}`;
+      ctx.fillText(p.titulo.toUpperCase(), margem + 100, y + 26);
+      ctx.font = `900 34px ${FONTE}`;
       ctx.fillText(caber(ctx, p.quem, LARGURA - margem * 2 - 130), margem + 100, y + 62);
       y += 100;
     }
   }
 
   ctx.textAlign = 'center';
-  ctx.fillStyle = '#ffffff';
-  ctx.font = `700 32px ${FONTE}`;
-  ctx.globalAlpha = 0.9;
+  ctx.fillStyle = TINTA;
+  ctx.font = `800 32px ${FONTE}`;
   ctx.fillText(LINK_DO_JOGO.replace('https://', ''), LARGURA / 2, ALTURA - 60);
-  ctx.globalAlpha = 1;
 }
 
-// Acima disso o PNG (degradê + confete pesam) vira JPEG: o share no 4G/WhatsApp fica leve e a diferença não aparece.
+// Acima disso o PNG (bolinhas e bordas pesam) vira JPEG: o share no 4G/WhatsApp fica leve e a diferença não aparece.
 const LIMITE_PNG = 1_000_000;
 const QUALIDADE_JPEG = 0.92;
 

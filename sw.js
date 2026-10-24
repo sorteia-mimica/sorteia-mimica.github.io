@@ -1,4 +1,4 @@
-const CACHE = 'mimica-v24';
+const CACHE = 'mimica-v25';
 const ARQUIVOS = [
   "./",
   "index.html",

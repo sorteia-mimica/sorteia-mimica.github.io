@@ -69,7 +69,7 @@ export function piscarTela(duracao = 1100) {
 }
 
 // Confete leve (só CSS transform/opacity). Some sozinho em ~2,5 s; nada com movimento reduzido.
-const CORES_CONFETE = ['#8b5cf6', '#c026d3', '#f59e0b', '#22c55e', '#3b82f6', '#ef4444'];
+const CORES_CONFETE = ['#f6e200', '#763ae7', '#00bad1', '#f75c61', '#0b0c16'];
 
 export function confete(quantidade = 60) {
   if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return () => {};

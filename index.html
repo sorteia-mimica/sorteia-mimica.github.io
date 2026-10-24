@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#6d28d9">
+  <meta name="theme-color" content="#f8f3d5">
   <!-- Aplica claro/escuro antes da primeira pintura (sem piscar). Sem escolha salva, segue o sistema. -->
   <script>
     (function () {
@@ -13,7 +13,7 @@
         try { escolha = localStorage.getItem('mimica:tema'); } catch (e) {}
         var escuro = escolha ? escolha === 'escuro' : sistema.matches;
         document.documentElement.dataset.theme = escuro ? 'dark' : 'light';
-        document.querySelector('meta[name="theme-color"]').content = escuro ? '#110c1d' : '#6d28d9';
+        document.querySelector('meta[name="theme-color"]').content = escuro ? '#151423' : '#f8f3d5';
       }
       window.aplicarTema = aplicar;
       aplicar();
@@ -36,6 +36,10 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <!-- Fontes do visual: Bungee (títulos e botões) e Nunito (texto). Sem rede ficam as do sistema. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;700;800;900&display=swap">
   <link rel="stylesheet" href="css/style.css">
   <!-- Baixa todos os módulos em paralelo (sem cascata de imports) e os temas junto. -->
   <link rel="modulepreload" href="js/app.js">

@@ -7,6 +7,7 @@ Jogo de mímica para jogar num celular só: escolha os temas, sorteie, encene e 
 ## Desenvolvimento
 
 - Sem build: abra com qualquer servidor estático, ex. `python3 -m http.server 8123`.
+- Visual: cartões com borda grossa e sombra dura, fontes Bungee (títulos/botões) e Nunito (texto) via Google Fonts; sem rede o jogo usa as fontes do sistema. Cores em `css/style.css` (`:root`).
 - Testes: `npm test` (Node 22+).
 - Temas: edite `data/temas.json` (exatamente 50 itens por dificuldade em cada tema; regra: 1 gesto óbvio = fácil, 2–3 gestos ou cena curta = médio, várias etapas ou fácil de confundir = difícil) e rode os testes.
 - Ao adicionar um arquivo servido, inclua-o em `ARQUIVOS` no `sw.js` (o teste avisa).

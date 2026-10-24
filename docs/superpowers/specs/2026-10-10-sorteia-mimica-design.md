@@ -158,7 +158,8 @@ test/*.test.js     # node --test
 
 ### Visual
 - Mobile-first, botões grandes, alto contraste.
-- Cores por dificuldade: fácil verde, médio amarelo, difícil vermelho.
+- Estilo "pop": fundo creme com bolas de cor, cartões de papel com borda de 4 px e sombra dura (4 px 4 px), botões que afundam ao apertar; títulos e botões em Bungee, texto em Nunito. Paleta em oklch (`--ink`, `--paper`, `--canary`, `--grape`, `--turquoise`, `--coral`); o escuro inverte papel e tinta.
+- Cores por dificuldade: fácil turquesa, médio amarelo, difícil coral.
 - Animações leves no sorteio e no cronômetro; respeita `prefers-reduced-motion`.
 - Voltar do navegador/Android: fora do Início há sempre uma entrada do jogo no topo do histórico; ao chegar no Início ela (e entradas velhas de antes de um reload) é devolvida em silêncio (`js/voltar.js`: a volta só "termina" quando o popstate chega, e o modal só responde depois disso, para nenhum pushState cair por baixo da volta). Leitura, mímica e conferência seguram o voltar (fica na tela); Config, Como jogar, Vez e Resultado voltam ao Início (a partida fica salva); no Final vale como "Voltar ao início"; no Início sai do site com um voltar só (inclusive com entradas velhas de antes de um reload).
 - Teclado: o foco de cada tela começa no título; no Início os botões 🔊/🌙 vêm logo depois dele (1º Tab). Steppers no limite ficam `aria-disabled` (apagados, ainda focáveis). Celular deitado (altura ≤ 500 px): rodapé fixo enxuto.
